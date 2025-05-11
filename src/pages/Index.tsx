@@ -71,7 +71,7 @@ const Index = () => {
     const getUser = async () => {
         console.log("User", JSON.parse(user as string));
        try {
-        const res = await axios.post("/users/get-user-data", {
+        const res = await axios.post(`${API_URL}/users/get-user-data`, {
             email: JSON.parse(user as string)
         });
         console.log("User", res.data.user);
