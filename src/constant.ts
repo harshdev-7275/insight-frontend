@@ -1,1 +1,1 @@
-export const API_URL = import.meta.env.VITE_BASE_URL || 'https://insight-backend-1.onrender.com//v1/api';
+export const API_URL =  'https://insight-backend-1.onrender.com/v1/api';
