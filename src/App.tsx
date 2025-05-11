@@ -1,46 +1,33 @@
-import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import { BrowserRouter, Route, Routes, useNavigate } from "react-router";
-import Login from './screens/Login';
-import Dashboard from './screens/Dashboard';
+// import { Toaster } from "@/components/ui/toaster";
+import { Toaster as Sonner, Toaster } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useState } from "react";
+import Index from "./pages/Index";
+import Login from "./pages/Login";
+// import NotFound from "./pages/NotFound";
 
+const queryClient = new QueryClient();
 
 function App() {
-  const [user, setUser] = useState<{
-    id: string;
-    name: string;
-    email: string;
-    created_at: string;
-    updated_at: string;
-  } | null>(null)
-  const navigate = useNavigate()
-  const getUser = ()=>{
-   const user = localStorage.getItem("insight-user")
-   if(user){
-    return JSON.parse(user)
-   }
-   return null
-  }
-useEffect(()=>{
-  const user = getUser()
-  if(user){
-    setUser(user)
-    navigate("/dashboard")
-  }else{
-    navigate("/")
-  }
-},[])
+  const [count, setCount] = useState(0)
+
   return (
-
-<div>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/dashboard" element={<Dashboard user={user} />} />
-      </Routes>
-      </div>
-
+<QueryClientProvider client={queryClient}>
+    <TooltipProvider>
+      <Toaster />
+      <Sonner />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/login" element={<Login />} />
+          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          {/* <Route path="*" element={<NotFound />} /> */}
+        </Routes>
+      </BrowserRouter>
+    </TooltipProvider>
+  </QueryClientProvider>
   )
 }
 
